@@ -29,14 +29,14 @@ exports.userRegister = async (req, res) => {
         return res.status(400).json({ error: 'something went wrong' })
     }
 
-    const url = `${process.env.CLIENT_URL}/emailconfirmation/${token.token}`
+    const c_url = `${process.env.CLIENT_URL}/emailconfirmation/${token.token}`
     //send email
     sendEmail({
         from:process.env.SMTP_USER,
         to:user.email,
         subject:"email varification link",
        // text:`hello, \n\n please verify your account by cliking below link below:\n\n http:\/\/${req.headers.host}\/api\/confirmation\/${token.token}`
-        html:`<a href='${url}'> verify email </a>`
+        html:`<a href='${c_url}'> verify email </a>`
         })
     if(sendEmail){
         console.log("email send");
@@ -158,13 +158,15 @@ exports.forgetPassword= async(req,res)=>{
     if(!token){
         return res.status(400).json({ error: 'something went wrong' })
     }
+
+    const c_url = `${process.env.CLIENT_URL}/resetpassword/${token.token}`
     //send email
     sendEmail({
         from:"no-reply@expresscommerce.com",
         to:user.email,
         subject:"reset password  link",
-        text:`hello, \n\n please reste  your password by cliking below link below Link:\n\n http:\/\/${req.headers.host}\/api\/resetpassword\/${token.token}`
-
+        text:`hello, \n\n please reste  your password by cliking below link below Link:\n\n http:\/\/${req.headers.host}\/api\/resetpassword\/${token.token}`,
+        html:`<a href='${c_url}'  >Click here to Reset Password </a>`
     })
     res.json({message: ' password reset link has been sent'})
 }

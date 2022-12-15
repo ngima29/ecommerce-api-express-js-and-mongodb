@@ -45,6 +45,21 @@ exports.userValidation=[
 
 ]
 
+exports.passwordValidation=[
+    check('password',' password must be required ').notEmpty()
+    .matches(/[a-z]/)
+    .withMessage("password  must contain at least one lowercase letter ")
+    .matches(/[A-Z]/)
+    .withMessage("password  must contain at least one uppercase letter ")
+    .matches(/[0-9]/)
+    .withMessage("password  must contain at least one numeric character ")
+    .matches(/[@$#%-*/!]/)
+    .withMessage("password  must contain at least one special character  ")
+    .isLength({min:8})
+    .withMessage("password  must be 8 characters ")
+
+]
+
 exports.validation=(req,res,next)=>{
     const errors = validationResult(req)
     if(errors.isEmpty()){
